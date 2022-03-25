@@ -14,12 +14,15 @@ class MainActivity : AppCompatActivity() {
         val permissions = arrayListOf(Manifest.permission.CAMERA, Manifest.permission.ACCESS_COARSE_LOCATION)
 
         EasyPerms.addPermissions(permissions)
-            .addOnSuccessCallback {
-                Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureCallback { e ->
-                Toast.makeText(this, e, Toast.LENGTH_SHORT).show()
-            }
+            .addCallback(object: EasyPerms.EasyPermsCallback {
+                override fun onSuccess() {
+                    Toast.makeText(this@MainActivity, "Success!", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onFailure(e: String) {
+                    Toast.makeText(this@MainActivity, e, Toast.LENGTH_SHORT).show()
+                }
+            })
             .check(this)
     }
 

@@ -7,10 +7,14 @@ import androidx.core.app.ActivityCompat
 
 object EasyPerms: Activity() {
 
+    interface EasyPermsCallback {
+        fun onSuccess()
+        fun onFailure(e: String)
+    }
+
     private val permissions = ArrayList<String>()
 
-    private var onSuccessCallback: (() -> Unit)? = null
-    private var onFailureCallback: ((errorMessage: String?) -> Unit)? = null
+    private var permissionsCallback: EasyPermsCallback? = null
     private var permissionDenied = false
 
     fun check(context: Context) {
@@ -18,7 +22,7 @@ object EasyPerms: Activity() {
             if (!hasPermissions(context)){
                 // request permissions
                 requestPermissions(context)
-            } else onSuccessCallback?.invoke()
+            } else permissionsCallback?.onSuccess()
         }
     }
 
@@ -38,13 +42,8 @@ object EasyPerms: Activity() {
         permissions.clear()
     }
 
-    fun addOnSuccessCallback(callback: (() -> Unit)?): EasyPerms {
-        onSuccessCallback = callback
-        return this
-    }
-
-    fun addOnFailureCallback(callback: ((errorMessage: String?) -> Unit)?): EasyPerms {
-        onFailureCallback = callback
+    fun addCallback(permissionsCallback: EasyPermsCallback): EasyPerms {
+        this.permissionsCallback = permissionsCallback
         return this
     }
 
@@ -68,12 +67,14 @@ object EasyPerms: Activity() {
         if (grantResults.isNotEmpty()){
             for (result in grantResults){
                 if (result != PackageManager.PERMISSION_GRANTED) {
-                    onFailureCallback?.invoke("Permission ${permissions[grantResults.indexOf(result)]} Denied")
+                    val permissionText = permissions[grantResults.indexOf(result)].replace("android.permission.", "")
+
+                    permissionsCallback?.onFailure("$permissionText permission denied")
                     permissionDenied = true
                     break
                 }
             }
-            if (!permissionDenied) onSuccessCallback?.invoke()
+            if (!permissionDenied) permissionsCallback?.onSuccess()
             permissionDenied = false
         }
     }
