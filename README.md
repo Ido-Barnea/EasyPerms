@@ -13,7 +13,7 @@ A simple library to help developers ask for permissions more easily.
 > Step 2: Add the dependency
   ```gradle
   dependencies {
-	        implementation 'TODO TODO TODO TODO TODO'
+	        implementation ''
 	}
   ```
   That's it!
