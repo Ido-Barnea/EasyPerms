@@ -19,7 +19,32 @@ A simple library to help developers ask for permissions more easily.
   That's it!
 
 # :fast_forward: Quick use
-TODO TODO TODO TODO TODO
+```kotlin
+val permissions = arrayListOf(Manifest.permission.CAMERA, Manifest.permission.ACCESS_COARSE_LOCATION)
+
+EasyPerms.addPermissions(permissions)
+	.addCallback(object: EasyPerms.EasyPermsCallback {
+		override fun onSuccess() {
+			Toast.makeText(this@MainActivity, "Success!", Toast.LENGTH_SHORT).show()
+		}
+
+		override fun onFailure(e: String) {
+			Toast.makeText(this@MainActivity, e, Toast.LENGTH_SHORT).show()
+		}
+	})
+	.check(this)
+
+```
+```kotlin
+override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPerms.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+```
 
 # :briefcase: License
 ```
