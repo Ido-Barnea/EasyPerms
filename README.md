@@ -23,7 +23,7 @@ A simple library to help developers ask for permissions more easily
 val permissions = arrayListOf(Manifest.permission.CAMERA, Manifest.permission.ACCESS_COARSE_LOCATION)
 
 EasyPerms.addPermissions(permissions)
-	.addCallback(object: EasyPerms.EasyPermsCallback {
+	.addCallback(object: EasyPermsCallback {
 		override fun onSuccess() {
 			Toast.makeText(this@MainActivity, "Success!", Toast.LENGTH_SHORT).show()
 		}
