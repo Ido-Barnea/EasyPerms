@@ -25,11 +25,11 @@ val permissions = arrayListOf(Manifest.permission.CAMERA, Manifest.permission.AC
 EasyPerms.addPermissions(permissions)
 	.addCallback(object: EasyPermsCallback {
 		override fun onSuccess() {
-			Toast.makeText(this@MainActivity, "Success!", Toast.LENGTH_SHORT).show()
+			// Permission accepted, success!	
 		}
 
 		override fun onFailure(error: String) {
-			Toast.makeText(this@MainActivity, error, Toast.LENGTH_SHORT).show()
+			// Permission denied
 		}
 	})
 	.check(this)
