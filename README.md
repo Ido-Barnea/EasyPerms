@@ -28,8 +28,8 @@ EasyPerms.addPermissions(permissions)
 			Toast.makeText(this@MainActivity, "Success!", Toast.LENGTH_SHORT).show()
 		}
 
-		override fun onFailure(e: String) {
-			Toast.makeText(this@MainActivity, e, Toast.LENGTH_SHORT).show()
+		override fun onFailure(error: String) {
+			Toast.makeText(this@MainActivity, error, Toast.LENGTH_SHORT).show()
 		}
 	})
 	.check(this)
