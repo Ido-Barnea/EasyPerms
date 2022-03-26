@@ -5,13 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 
-object EasyPerms: Activity() {
-
-    interface EasyPermsCallback {
-        fun onSuccess()
-        fun onFailure(e: String)
-    }
-
+object EasyPerms : Activity() {
     private val permissions = ArrayList<String>()
 
     private var permissionsCallback: EasyPermsCallback? = null
@@ -19,10 +13,10 @@ object EasyPerms: Activity() {
 
     fun check(context: Context) {
         if (permissions.isNotEmpty()) {
-            if (!hasPermissions(context)){
+            if (!hasPermissions(context)) {
                 // request permissions
                 requestPermissions(context)
-            } else permissionsCallback?.onSuccess()
+            } else permissionsCallback?.onPermissionAccepted()
         }
     }
 
@@ -37,7 +31,7 @@ object EasyPerms: Activity() {
         return true
     }
 
-    private fun requestPermissions(context: Context){
+    private fun requestPermissions(context: Context) {
         ActivityCompat.requestPermissions(context as Activity, permissions.toTypedArray(), 100)
         permissions.clear()
     }
@@ -64,17 +58,20 @@ object EasyPerms: Activity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if (grantResults.isNotEmpty()){
-            for (result in grantResults){
+        if (grantResults.isNotEmpty()) {
+            for (result in grantResults) {
                 if (result != PackageManager.PERMISSION_GRANTED) {
-                    val permissionText = permissions[grantResults.indexOf(result)].replace("android.permission.", "")
+                    val permissionText = permissions[grantResults.indexOf(result)].replace(
+                        "android.permission.",
+                        ""
+                    ) // android.permission.CAMERA -> CAMERA
 
-                    permissionsCallback?.onFailure("$permissionText permission denied")
+                    permissionsCallback?.onPermissionDenied("$permissionText permission denied")
                     permissionDenied = true
                     break
                 }
             }
-            if (!permissionDenied) permissionsCallback?.onSuccess()
+            if (!permissionDenied) permissionsCallback?.onPermissionAccepted()
             permissionDenied = false
         }
     }
