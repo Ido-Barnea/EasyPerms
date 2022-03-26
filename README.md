@@ -1,5 +1,5 @@
 # :key: EasyPerms
-A simple library to help developers ask for permissions more easily.
+A simple library to help developers ask for permissions more easily
 
 # :question: How can I add this to my project?
 > Step 1: Add the JitPack repository to your build file
@@ -13,13 +13,38 @@ A simple library to help developers ask for permissions more easily.
 > Step 2: Add the dependency
   ```gradle
   dependencies {
-	        implementation 'TODO TODO TODO TODO TODO'
+	        implementation 'com.github.Ido-Barnea:EasyPerms:1.0.0'
 	}
   ```
   That's it!
 
 # :fast_forward: Quick use
-TODO TODO TODO TODO TODO
+```kotlin
+val permissions = arrayListOf(Manifest.permission.CAMERA, Manifest.permission.ACCESS_COARSE_LOCATION)
+
+EasyPerms.addPermissions(permissions)
+	.addCallback(object: EasyPermsCallback {
+		override fun onSuccess() {
+			// Permission accepted, success!	
+		}
+
+		override fun onFailure(error: String) {
+			// Permission denied
+		}
+	})
+	.check(this)
+
+```
+```kotlin
+override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPerms.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+```
 
 # :briefcase: License
 ```
