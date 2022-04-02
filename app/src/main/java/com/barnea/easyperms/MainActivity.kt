@@ -1,8 +1,9 @@
-package com.barnea.library
+package com.barnea.easyperms
 
 import android.Manifest
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.barnea.library.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

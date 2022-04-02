@@ -1,4 +1,4 @@
-package com.barnea.library
+package com.barnea.easyperms
 
 import android.app.Activity
 import android.content.Context
