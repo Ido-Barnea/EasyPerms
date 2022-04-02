@@ -13,7 +13,7 @@ A simple library to help developers ask for permissions more easily
 > Step 2: Add the dependency
   ```gradle
   dependencies {
-	        implementation 'com.github.Ido-Barnea:EasyPerms:1.0.1'
+	        implementation 'com.github.Ido-Barnea:EasyPerms:1.0.2'
 	}
   ```
   That's it!
