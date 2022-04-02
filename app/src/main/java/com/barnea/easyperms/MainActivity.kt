@@ -3,8 +3,6 @@ package com.barnea.easyperms
 import android.Manifest
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.barnea.library.EasyPerms
-import com.barnea.library.EasyPermsCallback
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
