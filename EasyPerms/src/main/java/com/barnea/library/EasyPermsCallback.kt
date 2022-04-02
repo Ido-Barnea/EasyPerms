@@ -1,4 +1,4 @@
-package com.barnea.easyperms
+package com.barnea.library
 
 interface EasyPermsCallback {
 

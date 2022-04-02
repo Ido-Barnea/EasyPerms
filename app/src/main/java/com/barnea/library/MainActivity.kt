@@ -1,4 +1,4 @@
-package com.barnea.easyperms
+package com.barnea.library
 
 import android.Manifest
 import android.os.Bundle
