@@ -1,5 +1,5 @@
 # :key: EasyPerms
-A simple library to help developers ask for permissions more easily
+A simple library to help developers ask for permissions easily
 
 # :question: How can I add this to my project?
 > Step 1: Add the JitPack repository to your build file
