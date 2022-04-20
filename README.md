@@ -24,16 +24,19 @@ val permissions = arrayListOf(Manifest.permission.CAMERA, Manifest.permission.AC
 
 EasyPerms.addPermissions(permissions)
 	.addCallback(object: EasyPermsCallback {
-		override fun onSuccess() {
-			// Permission accepted, success!	
-		}
+    	override fun onPermissionAccepted(permission: String) {
+        	// Permission accepted, success!
+        }
 
-		override fun onFailure(error: String) {
-			// Permission denied
-		}
-	})
-	.check(this)
+        override fun onPermissionDenied(permission: String) {
+             // Permission denied
+        }
 
+        override fun onPermissionDeniedPermanently(permission: String) {
+            // Permission denied permanently
+        }
+    })
+    .check(this)
 ```
 ```kotlin
 override fun onRequestPermissionsResult(
@@ -42,7 +45,7 @@ override fun onRequestPermissionsResult(
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPerms.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPerms.onRequestPermissionsResult(this, requestCode, permissions, grantResults)
     }
 ```
 
