@@ -2,8 +2,8 @@ package com.barnea.easyperms
 
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.barnea.library.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,12 +14,16 @@ class MainActivity : AppCompatActivity() {
 
         EasyPerms.addPermissions(permissions)
             .addCallback(object: EasyPermsCallback {
-                override fun onPermissionAccepted() {
+                override fun onPermissionAccepted(permission: String) {
                     // Permission accepted, success!
                 }
 
-                override fun onPermissionDenied(error: String) {
+                override fun onPermissionDenied(permission: String) {
                     // Permission denied
+                }
+
+                override fun onPermissionDeniedPermanently(permission: String) {
+                    // Permission denied permanently
                 }
             })
             .check(this)
@@ -31,6 +35,6 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPerms.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPerms.onRequestPermissionsResult(this, requestCode, permissions, grantResults)
     }
 }

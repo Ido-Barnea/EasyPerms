@@ -7,9 +7,8 @@ import androidx.core.app.ActivityCompat
 
 object EasyPerms : Activity() {
     private val permissions = ArrayList<String>()
-
     private var permissionsCallback: EasyPermsCallback? = null
-    private var permissionDenied = false
+    private var permissionsRequestCode = 103
 
     /**
      * checks if user accepted the requested permissions, if not, requests them
@@ -20,7 +19,7 @@ object EasyPerms : Activity() {
             if (!hasPermissions(context)) {
                 // request permissions
                 requestPermissions(context)
-            } else permissionsCallback?.onPermissionAccepted()
+            } else permissionsCallback?.onPermissionAccepted(permissions[0])
         }
     }
 
@@ -44,7 +43,7 @@ object EasyPerms : Activity() {
      * @return EasyPerms object
      */
     private fun requestPermissions(context: Context) {
-        ActivityCompat.requestPermissions(context as Activity, permissions.toTypedArray(), 100)
+        ActivityCompat.requestPermissions(context as Activity, permissions.toTypedArray(), permissionsRequestCode)
         permissions.clear()
     }
 
@@ -79,28 +78,23 @@ object EasyPerms : Activity() {
      * @return checks if the permissions were granted, if not, invokes permission denied callback
      * otherwise, invokes permission accepted callback
      */
-    override fun onRequestPermissionsResult(
+    fun onRequestPermissionsResult(
+        activity: Activity,
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == permissionsRequestCode) {
+            if (grantResults.isNotEmpty()) {
+                for (i in permissions.indices) {
+                    if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                        val shouldShowRationale = ActivityCompat.shouldShowRequestPermissionRationale(activity, permissions[i])
 
-        if (grantResults.isNotEmpty()) {
-            for (result in grantResults) {
-                if (result != PackageManager.PERMISSION_GRANTED) {
-                    val permissionText = permissions[grantResults.indexOf(result)].replace(
-                        "android.permission.",
-                        ""
-                    ) // android.permission.CAMERA -> CAMERA
-
-                    permissionsCallback?.onPermissionDenied("$permissionText permission denied")
-                    permissionDenied = true
-                    break
+                        if (!shouldShowRationale) permissionsCallback?.onPermissionDeniedPermanently(permissions[i])
+                        else permissionsCallback?.onPermissionDenied(permissions[i])
+                    } else permissionsCallback?.onPermissionAccepted(permissions[i])
                 }
             }
-            if (!permissionDenied) permissionsCallback?.onPermissionAccepted()
-            permissionDenied = false
         }
     }
 }
