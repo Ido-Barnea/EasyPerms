@@ -29,11 +29,11 @@ EasyPerms.addPermissions(permissions)
         }
 
         override fun onPermissionDenied(permission: String) {
-             // Permission denied
+        	// Permission denied
         }
 
         override fun onPermissionDeniedPermanently(permission: String) {
-            // Permission denied permanently
+        	// Permission denied permanently
         }
     })
     .check(this)
