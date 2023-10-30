@@ -1,7 +1,7 @@
-# EasyPerms :key:
+# :key: EasyPerms
 A library designed to help developers easily request permissions.
 
-# How can I add this to my project? :question:
+# :question: How can I add this to my project?
 > Step 1: Add the JitPack repository to your build file
   ```gradle
   allprojects {
@@ -18,7 +18,7 @@ A library designed to help developers easily request permissions.
   ```
   That's it!
 
-# Quick use :fast_forward:
+# :fast_forward: Quick use
 ```kotlin
 val permissions = arrayListOf(Manifest.permission.CAMERA, Manifest.permission.ACCESS_COARSE_LOCATION)
 
